@@ -1,0 +1,443 @@
+\documentclass[10pt, letterpaper]{article}
+
+% Packages:
+\usepackage[
+    ignoreheadfoot, % set margins without considering header and footer
+    top=2 cm, % seperation between body and page edge from the top
+    bottom=2 cm, % seperation between body and page edge from the bottom
+    left=2 cm, % seperation between body and page edge from the left
+    right=2 cm, % seperation between body and page edge from the right
+    footskip=1.0 cm, % seperation between body and footer
+    % showframe % for debugging 
+]{geometry} % for adjusting page geometry
+\usepackage{titlesec} % for customizing section titles
+\usepackage{tabularx} % for making tables with fixed width columns
+\usepackage{array} % tabularx requires this
+\usepackage[dvipsnames]{xcolor} % for coloring text
+\definecolor{primaryColor}{RGB}{0, 79, 144} % define primary color
+\usepackage{enumitem} % for customizing lists
+% \usepackage{fontawesome5} % for using icons
+% \usepackage{amsmath} % for math
+\usepackage[
+    pdftitle={John Doe's CV},
+    pdfauthor={John Doe},
+    pdfcreator={LaTeX with RenderCV},
+    colorlinks=true,
+    urlcolor=primaryColor
+]{hyperref} % for links, metadata and bookmarks
+% \usepackage[pscoord]{eso-pic} % for floating text on the page
+\usepackage{calc} % for calculating lengths
+% \usepackage{bookmark} % for bookmarks
+\usepackage{lastpage} % for getting the total number of pages
+\usepackage{changepage} % for one column entries (adjustwidth environment)
+\usepackage{paracol} % for two and three column entries
+\usepackage{ifthen} % for conditional statements
+\usepackage{needspace} % for avoiding page brake right after the section title
+\usepackage{iftex} % check if engine is pdflatex, xetex or luatex
+
+% Ensure that generate pdf is machine readable/ATS parsable:
+\ifPDFTeX
+    \input{glyphtounicode}
+    \pdfgentounicode=1
+    % \usepackage[T1]{fontenc} % this breaks sb2nov
+    \usepackage[utf8]{inputenc}
+    \usepackage{lmodern}
+\fi
+
+
+
+% Some settings:
+\AtBeginEnvironment{adjustwidth}{\partopsep0pt} % remove space before adjustwidth environment
+\pagestyle{empty} % no header or footer
+\setcounter{secnumdepth}{0} % no section numbering
+\setlength{\parindent}{0pt} % no indentation
+\setlength{\topskip}{0pt} % no top skip
+\setlength{\columnsep}{0cm} % set column seperation
+\makeatletter
+\let\ps@customFooterStyle\ps@plain % Copy the plain style to customFooterStyle
+\patchcmd{\ps@customFooterStyle}{\thepage}{
+    \color{gray}\textit{\small Deepanshu Saini - Page \thepage{} of \pageref*{LastPage}}
+}{}{} % replace number by desired string
+\makeatother
+\pagestyle{customFooterStyle}
+
+\titleformat{\section}{\needspace{4\baselineskip}\bfseries\large}{}{0pt}{}[\vspace{1pt}\titlerule]
+
+\titlespacing{\section}{
+    % left space:
+    -1pt
+}{
+    % top space:
+    0.3 cm
+}{
+    % bottom space:
+    0.2 cm
+} % section title spacing
+
+\renewcommand\labelitemi{$\circ$} % custom bullet points
+\newenvironment{highlights}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=0.4 cm + 10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights
+
+\newenvironment{highlightsforbulletentries}{
+    \begin{itemize}[
+        topsep=0.10 cm,
+        parsep=0.10 cm,
+        partopsep=0pt,
+        itemsep=0pt,
+        leftmargin=10pt
+    ]
+}{
+    \end{itemize}
+} % new environment for highlights for bullet entries
+
+
+\newenvironment{onecolentry}{
+    \begin{adjustwidth}{
+        0.2 cm + 0.00001 cm
+    }{
+        0.2 cm + 0.00001 cm
+    }
+}{
+    \end{adjustwidth}
+} % new environment for one column entries
+
+\newenvironment{twocolentry}[2][]{
+    \onecolentry
+    \def\secondColumn{#2}
+    \setcolumnwidth{\fill, 4.5 cm}
+    \begin{paracol}{2}
+}{
+    \switchcolumn \raggedleft \secondColumn
+    \end{paracol}
+    \endonecolentry
+} % new environment for two column entries
+
+\newenvironment{header}{
+    \setlength{\topsep}{0pt}\par\kern\topsep\centering\linespread{1.5}
+}{
+    \par\kern\topsep
+} % new environment for the header
+
+
+% save the original href command in a new command:
+\let\hrefWithoutArrow\href
+
+% new command for external links:
+\renewcommand{\href}[2]{\hrefWithoutArrow{#1}{\ifthenelse{\equal{#2}{}}{ }{#2 }\raisebox{.15ex}{\footnotesize \faExternalLink*}}}
+
+
+\begin{document}
+    \newcommand{\AND}{\unskip
+        \cleaders\copy\ANDbox\hskip\wd\ANDbox
+        \ignorespaces
+    }
+    \newsavebox\ANDbox
+    \sbox\ANDbox{}
+
+     \begin{header}
+        \textbf{\fontsize{24 pt}{24 pt}\selectfont DEEPANSHU SAINI}
+
+        \vspace{0.3 cm}
+        
+        {\fontsize{12 pt}{12 pt}\selectfont MACHINE LEARNING ENGINEER}
+
+        \normalsize
+        
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{mailto:dipanshu765@gmail.com}{\color{black}{\footnotesize[regular]}\hspace*{0.13cm}dipanshu765@gmail.com}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{tel:+91-9654328717}{\color{black}{\footnotesize*}\hspace*{0.13cm}91-9654328717}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://linkedin.com/in/deepanshu-saini-197634193}{\color{black}{\footnotesize}\hspace*{0.13cm}deepanshu-saini-197634193}}%
+        \kern 0.25 cm%
+        \AND%
+        \kern 0.25 cm%
+        \mbox{\hrefWithoutArrow{https://github.com/dipanshu-765}{\color{black}{\footnotesize}\hspace*{0.13cm}dipanshu-765}}%
+    \end{header}
+
+    \vspace{0.3 cm - 0.1 cm}
+
+    \section{PROFESSIONAL SUMMARY}
+        \begin{onecolentry}
+            A highly motivated Machine Learning Engineer with \textbf{1.6 years of experience}, specializing in developing and deploying scalable ML models. Proficient in \textbf{Generative AI, NLP, and Computer Vision}, with a thorough understanding of algorithm functionality. Proven track record of delivering high-quality projects across \textbf{Healthcare, Retail, and Finance}. Skilled in Python, various ML algorithms, and cloud platforms including \textbf{GCP, Azure, and AWS.} 
+        \end{onecolentry}
+    
+    \vspace{0.2 cm}
+
+    \section{EDUCATION}
+        
+        \begin{twocolentry}{
+        
+        \textit{July 2019 – May 2023}}
+            \textbf{VIT Vellore}
+
+            \textit{B. Tech - Computer Science Engineering with specialization in Information Security}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item \textbf{Coursework:} Artificial Intelligence, Image Processing, Web Mining, Predictive Analytics, Business Intelligence
+            \end{highlights}
+        \end{onecolentry}
+    \vspace{0.2 cm}
+
+
+    
+    \section{EXPERIENCE}
+        \begin{twocolentry}{
+        \textit{Bengaluru}    
+            
+        \textit{Dec 2023 – Present}}
+            \textbf{Machine Learning Engineer}
+            
+            \textit{Quantiphi}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Led ML solutions for 10+ projects, utilizing statistical ML models, Time Series forecasting, LLMs, and GCP APIs.
+                \item Implemented RAG pipelines to develop chatbots as part of solutions
+                \item Managed solution deployments using Google Kubernetes Engine (GKE) and Cloud Run.
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+        \textit{Remote}    
+            
+        \textit{Jan 2023 – Nov 2023}}
+            \textbf{Machine Learning Engineer Intern}
+            
+            \textit{Quantiphi}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Completed trainings in Computer Vision, NLP, and Generative AI
+                \item Passed the \textbf{GCP Associate Cloud Engineer} certification exam
+                \item Worked on R\&D projects
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{twocolentry}{
+        \textit{Remote}    
+            
+        \textit{Dec 2021 – Aug 2022}}
+            \textbf{R\&D Intern}
+            
+            \textit{Samsung R\&D Institute India}
+        \end{twocolentry}
+
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item R\&D on classifying sounds in home environments
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+    \section{SKILLS}
+        \begin{onecolentry}
+            \textbf{Programming Languages:} Python, C/C++, JavaScript, Java, PHP
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Regression Algorithms:} Linear Regression, Ridge Regression, Huber Regression, Lasso Regression
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Classification Algorithms:} Logistic Regression, SVM, KNN
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Clustering Algorithms:} K-Means, Agglomerative Clustering, DBSCAN, HDBSCAN, OPTICS
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Boosting Algorithms:} XGBoost, CatBoost, AdaBoost
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Other ML Algorithms:} Decision Tree, Random Forest, PCA, ANN
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Time-Series Forecasting:} ARIMA, TCNN
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Computer Vision Algorithms:} CNNs, VGG, ResNet, SqueezeNet, Inception Net, MobileNets, EfficientNets, YOLO, U-Net
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{OCR:} TesseractOCR, RapidOCR
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Sequence Models:} RNNs, LSTMs, GRUs, Transformers
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Generative AI Models and Algorithms:} LLMs(Gemini, Mixtral, Llama, Phi), PEFT, DPO, Stable Diffusion, GANs, Autoencoders
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Cloud Platforms:} GCP, Azure, AWS
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{GCP Services:} Vertex AI, BigQuery, Google Kubernetes Engine, Cloud Run, BigQuery, Firestore, Artifact Registry, GCS
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{GCP APIs:} Document AI, Translation API, Speech-to-Text API
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{AWS Services:} AWS Bedrock
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Backend:} Flask, FastAPI, Node.js, Git, Bash Scripting, Docker, SQL, MongoDB
+        \end{onecolentry}
+        \vspace{0.1 cm}
+        \begin{onecolentry}
+            \textbf{Others:} Langchain, FAISS, RAG Pipeline, Tensorflow, OpenCV, Selenium, React.js
+        \end{onecolentry}
+
+    \vspace{0.2 cm}
+
+    \section{CERTIFICATIONS}
+        \begin{samepage}
+            \begin{twocolentry}{
+                May 2023 - May 2026
+            }
+                \textbf{GCP Associate Cloud Engineer}
+                \vspace{0.10 cm}
+            \end{twocolentry}
+            \begin{twocolentry}{
+                Aug 2021 - Aug 2023
+            }
+                \textbf{AWS Cloud Practitioner}
+                \vspace{0.10 cm}
+            \end{twocolentry}
+        \end{samepage}
+
+    \vspace{0.2 cm}
+    
+    \section{PROJECTS}
+
+        \begin{onecolentry}
+            \textbf{AI Assistant}
+        \end{onecolentry}
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed a chatbot to answer user queries related to rules and regulations across multiple U.S. states
+                \item \textbf{Skills Used:} Google's PALM Models, FastAPI(Python), GCP Firestore, Langchain, RAG
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Document Assistant}
+        \end{onecolentry}
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed a chatbot to generate documents based on user queries and user-selected/user-provided template
+                \item \textbf{Skills Used:} GCP, Python, Gemini Flash, Gemini Pro, Llama 3, Phi 3, Langchain, Docling, Pyppeteer, TesseractOCR, RapidOCR
+            \end{highlights}
+        \end{onecolentry}
+        
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Documents Tagging}
+        \end{onecolentry}
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Fine-tuned \textbf{Google’s Palm} and \textbf{Gemini} models, as well as \textbf{Llama2}, \textbf{Llama3}, and \textbf{Mixtral 8x7b} for document tagging with the best model achieving a F1-score of \textbf{91}
+                \item \textbf{Skills Used:} GCP Vertex AI, Python, Huggingface, Langchain
+            \end{highlights}
+        \end{onecolentry}
+        
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Ambient Listening}
+        \end{onecolentry}
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed a ML API to generate real-time transcriptions of doctor-patient conversations and complaints, medications, history, treat-ment plans) in SOAP and FHIR formats from transcripts 
+                and generate summaries
+                \item \textbf{Skills Used:} Google's STT API, Gemini 2.0 Flash, FastAPI(Python)
+            \end{highlights}
+        \end{onecolentry}
+
+        \vspace{0.2 cm}
+        
+        \begin{onecolentry}
+            \textbf{Overpayment Remittance Review and Reconcilation}
+        \end{onecolentry}
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed a ML API to extract overpayment data from remittances advices
+                \item \textbf{Skills Used:} GCP Cloud Run, GCP Document AI, FastAPI(Python), Gemini 2.0 Flash
+            \end{highlights}
+        \end{onecolentry}
+        
+        \vspace{0.2 cm}
+
+        \begin{onecolentry}
+            \textbf{Stduent Analytics}
+        \end{onecolentry}
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed models to predict dropout rates, enrollment rates, graduation rates, and helpdesk call volume for a University
+                \item \textbf{Skills Used:} FastAPI(Python), GCP BigQuery, Google Kubernetes Engine, Logistic Regression, SVM, PCA, Random Forest, ANN, ARIMA
+            \end{highlights}
+        \end{onecolentry}
+        
+
+        
+        \vspace{0.2 cm}
+        
+        \begin{onecolentry}
+            \textbf{Campaign Creation, Translation and Summarization Engine}
+        \end{onecolentry}
+        \vspace{0.10 cm}
+        \begin{onecolentry}
+            \begin{highlights}
+                \item Developed a chatbot allowing user to generate marketing campaigns for different channels based on user query in multiple different languages
+                \item Additional functionalities include summarization of input documents, translation of input document to user desired target languages
+                \item \textbf{Skills Used:} FastAPI(Python), Gemini Pro, Gemini Flash, RAG, TF-IDF, LDA, NMF, RAKE
+            \end{highlights}
+        \end{onecolentry}
+
+\end{document}
